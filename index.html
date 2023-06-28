@@ -24,6 +24,11 @@
         <div class="product-info">
             <h1><a :href="camtWebsite">{{product}}</a></h1>
             <h2>{{description}}</h2>
+            <p v-if="inventory > 10">In Stock</p>
+            <p v-else-if="inventory <= 10 && inventory > 0">Almose out of stock</p>
+            <p v-else>Out of Stock</p>
+            <p v-if="onSale">On Sale</p>
+            <p v-else>Not On Sale</p>
         </div>
     </div>
 
