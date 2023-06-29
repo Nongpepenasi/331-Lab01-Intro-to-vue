@@ -17,9 +17,7 @@ const productDisplay = {
             <p>Shipping: {{shipping}}</p>
             <p v-if="onSale">On Sale</p>
             <p v-else>Not On Sale</p>
-            <ul>
-                <li v-for="detail in details">{{detail}}</li>
-            </ul>
+            <product-details :details="details"></product-details>
             <div v-for="(variant,index) in variants" :key="variant.id"
             @mouseover = "updateVariant(index)" 
             class="color-circle" :style="{backgroundColor: variant.color}">
@@ -38,7 +36,7 @@ const productDisplay = {
     props: {
         premium: Boolean
     },
-    setup(props){
+    setup(props, {emit}){
         const shipping = computed(() => {
             if (props.premium) {
                 return 'Free'
@@ -71,7 +69,7 @@ const productDisplay = {
 
         const variants = ref([
             {id: 2234, color: 'green', image: './assets/images/socks_green.jpg', quantity: 50},
-            {id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 0}
+            {id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 50}
         ])
 
         const selectedVariant = ref(0)
@@ -85,7 +83,8 @@ const productDisplay = {
         const cart = ref(0)
 
         function addToCart() {
-            cart.value += 1
+            // cart.value += 1
+            emit('add-to-cart', variants.value[selectedVariant.value].id)
         }
 
         const title = computed(() => {
