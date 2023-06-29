@@ -29,6 +29,7 @@ const productDisplay = {
             </ul>
             <button class="button" :disabled="!inStock" @click="addToCart"
             :class="{disabledButton: !inStock}">Add To Cart</button>
+            <button class="button" @click="removeFromCart">Remove From Cartk</button>
             <button class="button" @click="updateStock">Update Stock</button>
         </div>
     </div>
@@ -87,6 +88,10 @@ const productDisplay = {
             emit('add-to-cart', variants.value[selectedVariant.value].id)
         }
 
+        function removeFromCart() {
+            emit('remove-from-cart', variants.value[selectedVariant.value].id)
+        }
+
         const title = computed(() => {
             if (onSale.value) {
                 return brand.value + ' ' + product.value + " is on sale"
@@ -102,6 +107,7 @@ const productDisplay = {
         function updateStock(){
             variants.value[selectedVariant.value].quantity = inStock.value ? 0 : 50;
         }
+
 
         function updateVariant(index) {
             selectedVariant.value = index;
@@ -120,6 +126,7 @@ const productDisplay = {
             sockSizes,
             cart,
             addToCart,
+            removeFromCart,
             updateImage,
             updateStock,
             updateVariant,

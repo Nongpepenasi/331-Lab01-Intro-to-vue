@@ -14,8 +14,17 @@
     <div id="app">
         <!-- <h1>Product goes here</h1> -->
         <div class="nav-bar"></div>
-        <div class="cart">Cart({{cartView}})</div>
-        <product-display :premium="premium" @add-to-cart="updateCart"></product-display>
+        <!-- <div class="cart">Cart({{cart}})</div> -->
+        <div class="cart" v-id="Object.keys(cartView).length > 0">
+            Cart:
+            <ul>
+                <li v-for="(count, id) in cartView" :key="id">
+                    {{count}} x {{id}}
+                </li>
+            </ul>
+        </div>
+        <product-display :premium="premium" @add-to-cart="updateCart" 
+        @remove-from-cart="removeFromCart"></product-display>
         
         <!-- <product-display></product-display> -->
     </div>
