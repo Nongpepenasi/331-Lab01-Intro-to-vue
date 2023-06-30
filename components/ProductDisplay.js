@@ -13,7 +13,7 @@ const productDisplay = {
             <h2>{{description}}</h2>
             <p v-if="inventory > 10 && inStock">In Stock</p>
             <p v-else-if="inventory <= 10 && inventory > 0">Almost out of stock</p>
-            <p v-else">Out of Stock</p>
+            <p v-else>Out of Stock</p>
             <p>Shipping: {{shipping}}</p>
             <p v-if="onSale">On Sale</p>
             <p v-else>Not On Sale</p>
@@ -29,9 +29,11 @@ const productDisplay = {
             </ul>
             <button class="button" :disabled="!inStock" @click="addToCart"
             :class="{disabledButton: !inStock}">Add To Cart</button>
-            <button class="button" @click="removeFromCart">Remove From Cartk</button>
+            <button class="button" @click="removeFromCart">Remove</button>
             <button class="button" @click="updateStock">Update Stock</button>
         </div>
+        <review-list v-if="reviews.length" :reviews="reviews"></review-list>
+        <review-form @review-submitted="addReview"></review-form>
     </div>
     `,
     props: {
@@ -113,6 +115,13 @@ const productDisplay = {
             selectedVariant.value = index;
         }
 
+        const reviews = ref([])
+
+        function addReview (review) {
+            reviews.value.push(review)
+            console.log(reviews.value)
+        }
+
         return {
             title,
             description, 
@@ -130,7 +139,9 @@ const productDisplay = {
             updateImage,
             updateStock,
             updateVariant,
-            shipping
+            shipping,
+            reviews,
+            addReview
         }
     }
 }
